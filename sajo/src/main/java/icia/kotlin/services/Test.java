@@ -4,8 +4,7 @@ public class Test {
 	
 	public void tester() {
 		
-		System.out.println("check");
-		System.out.println("testing");
+		System.out.println("test 성공");
 		
 	}
 	
