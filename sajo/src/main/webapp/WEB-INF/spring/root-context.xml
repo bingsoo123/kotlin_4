@@ -1,8 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 		
+		
+		
+	<!-- DB연결 정보 -->
+	
+	<bean id="SAJO" class="com.zaxxer.hikari.HikariConfig">  <!-- HikariConfig BSBS = new HikariConfig() -->
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@106.243.194.230:7001:xe"></property>
+		<property name="username" value="SAJO"></property>
+		<property name="password" value="7160"></property>
+	</bean>
+
+	<!-- DBCP 정보 -->
+	
+	<bean id="dbsource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		
+		<constructor-arg ref="SAJO"/>
+		
+	</bean>
+	
+	
+   <!--SqlSession 정보  -->
+   
+   <bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean" >
+   		<property name="dataSource" ref="dbsource"></property>
+   </bean>
+	
+	
 </beans>
