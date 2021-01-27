@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Built-By: CHAE BIN SU
-Build-Jdk: 15.0.1
+Built-By: ￬ﾝﾴ￬ﾈﾘ￪ﾲﾽ
+Build-Jdk: 1.8.0_271
 Created-By: Maven Integration for Eclipse
 
