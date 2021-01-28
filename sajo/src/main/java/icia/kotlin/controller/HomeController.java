@@ -28,7 +28,7 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 		
 		mv.addObject("welcome","어서오세요 ~ 환영합니다");
-		mv.addObject("hi","잘부탁드립니다");
+		mv.addObject("hellow","감사합니다");
 		mv.addObject("serverTime", formattedDate );
 		
 		mv.setViewName("home");
