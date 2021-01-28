@@ -4,5 +4,6 @@ public class Tester3 {
 	public void test() {
 		System.out.println("ss");
 		System.out.println("test");
+		System.out.println("sooTest");
 	}
 }
