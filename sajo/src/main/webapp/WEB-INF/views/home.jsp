@@ -12,5 +12,6 @@
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
+<a href="/LogInForm">로그인 폼 이동</a>
 </body>
 </html>
