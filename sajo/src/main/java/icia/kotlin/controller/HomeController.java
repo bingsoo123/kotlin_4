@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -39,6 +40,16 @@ public class HomeController {
 	@RequestMapping(value = "/LogInForm", method = {RequestMethod.GET,RequestMethod.POST})
 	public ModelAndView LogInForm() {
 		ModelAndView mav = new ModelAndView();
+		mav.setViewName("logInForm");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/LogIn", method = RequestMethod.POST)
+	public ModelAndView LogIn(@RequestParam("mId") String mId , @RequestParam("mPwd") String mPwd) {
+		System.out.println("로그인 도착");
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("mId" , mId);
+		mav.addObject("mPwd" , mPwd);
 		mav.setViewName("logInForm");
 		return mav;
 	}
