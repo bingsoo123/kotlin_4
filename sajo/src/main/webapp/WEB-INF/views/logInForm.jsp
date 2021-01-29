@@ -13,9 +13,8 @@
 	<input type="button" value="서버 요청" onClick="moveLoginForm()"/>
 	
 	<br>
-	${mId }
-	${mPwd }
-	${date }
+	${bean.getMId() }
+	${bean.getMName() }
 
 </body>
 

@@ -9,32 +9,52 @@ import icia.kotlin.mapper.Mapper;
 
 @Service
 public class Authentication {
-	
+
 	@Autowired
 	private Mapper mapper;
 
-	public Authentication() {}
-	
+	public Authentication() {
+	}
+
 	public ModelAndView entrace(Beans bean) {
 		ModelAndView mav = null;
-		
-		if(bean.getService().equals("LogIn")){
-		mav = this.LoginCtl(bean);
+
+		if (bean.getService().equals("LogIn")) {
+			mav = this.LoginCtl(bean);
 		}
 		return mav;
 	}
-	
+
 	private ModelAndView LoginCtl(Beans bean) {
 		ModelAndView mav = new ModelAndView();
+
+		if (this.isMember(bean)) {
+
+			if (this.isPass(bean)) {
+				
+				mav.addObject("bean" , this.selectMember(bean));
+				
+			}
+		}
 		
-		System.out.println("로그인 도착");
-		
-		mav.addObject("mId",bean.getMId());
-		mav.addObject("mPwd",bean.getMPwd());
-		mav.addObject("date" , mapper.getData2());
 		mav.setViewName("logInForm");
 		
 		return mav;
 	}
+
+	private boolean convetToBoolean(int data) {
+		return data == 1 ? true : false;
+	}
+
+	private boolean isMember(Beans bean) {
+		return this.convetToBoolean(mapper.isMember(bean));
+	}
+
+	private boolean isPass(Beans bean) {
+		return this.convetToBoolean(mapper.isPass(bean));
+	}
 	
+	private Beans selectMember(Beans bean) {
+		return mapper.selectMember(bean);
+	}
 }
