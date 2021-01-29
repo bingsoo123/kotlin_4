@@ -15,6 +15,7 @@
 	<br>
 	${mId }
 	${mPwd }
+	${date }
 
 </body>
 

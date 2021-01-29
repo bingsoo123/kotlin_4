@@ -6,21 +6,28 @@ import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import icia.kotlin.beans.Beans;
+import icia.kotlin.mapper.Mapper;
+import icia.kotlin.services.Authentication;
 
 
 @Controller
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
+	@Autowired
+	private Authentication auth;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home(Locale locale, ModelAndView mv) {
@@ -47,16 +54,9 @@ public class HomeController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/LogIn", method = RequestMethod.POST)
-	@ModelAttribute("test")
-	public ModelAndView LogIn(@ModelAttribute("tester") Beans test) {
-		System.out.println();
-		ModelAndView mav = new ModelAndView();
-		
-		mav.addObject("mId" , test);
-		mav.addObject("mPwd" , test.getMPwd());
-		mav.setViewName("logInForm");
-		return mav;
+	@RequestMapping(value = "/{str}", method = RequestMethod.POST)
+	public ModelAndView LogIn(@ModelAttribute Beans test,@PathVariable String str) {
+		test.setService(str);
+		return auth.entrace(test);
 	}
-	
 }

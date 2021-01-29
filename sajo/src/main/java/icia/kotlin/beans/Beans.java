@@ -7,5 +7,7 @@ public class Beans {
 
 	private String mId;
 	private String mPwd;
+	private String service;
+	private String date;
 	
 }

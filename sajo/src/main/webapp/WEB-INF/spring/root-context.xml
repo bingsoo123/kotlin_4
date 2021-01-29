@@ -36,6 +36,8 @@
    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean" >
    		<property name="dataSource" ref="dbsource"></property>
    </bean>
+   
+   <mybatis-spring:scan base-package="icia.kotlin.mapper"/>
 	
 	
 </beans>
