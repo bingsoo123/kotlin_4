@@ -55,12 +55,10 @@ public class HomeController {
 	public ModelAndView LogIn(@ModelAttribute Beans m) {
 		System.out.println("로그인 도착");
 		
-		ModelAndView mav = new ModelAndView();		
-		mav.addObject("mId" , m.getMId());
-		mav.addObject("mPwd" , m.getMPwd());
-		mav.setViewName("logInForm");
+		ModelAndView mav = null;
+		m.setServiceCode("A");
 		
-		auth.entrance(m);
+		mav=auth.entrance(m);
 		return mav;
 	}
 	
