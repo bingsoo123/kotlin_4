@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>LogInForm</title>
 </head>
 <body>
 
@@ -13,8 +13,10 @@
 	<input type="button" value="서버 요청" onClick="moveLoginForm()"/>
 	
 	<br>
-	${mId }
-	${mPwd }
+	${mId }<br/>
+	${mPwd }<br/>
+
+	
 </body>
 
 <script>
@@ -24,7 +26,9 @@ function moveLoginForm(){
 	var mId = document.getElementsByName("mId")[0];
 	var mPwd = document.getElementsByName("mPwd")[0];
 	
+	
 	var form = document.createElement("form");
+	
 	
 	form.action = "LogIn";
 	form.method = "post";

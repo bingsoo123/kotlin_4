@@ -6,18 +6,26 @@ import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import icia.kotlin.bean.Member;
+import icia.kotlin.services.Authentication;
 
 
 @Controller
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
+	@Autowired
+	private Authentication auth;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home(Locale locale, ModelAndView mv) {
@@ -29,7 +37,7 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 		
 		mv.addObject("welcome","어서오세요 ~ 환영합니다");
-		mv.addObject("hellow","감사합니다");
+		mv.addObject("hello","감사합니다");
 		mv.addObject("serverTime", formattedDate );
 		
 		mv.setViewName("home");
@@ -40,18 +48,18 @@ public class HomeController {
 	@RequestMapping(value = "/LogInForm", method = {RequestMethod.GET,RequestMethod.POST})
 	public ModelAndView LogInForm() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("logInForm");
+		mav.setViewName("LogInForm");
 		return mav;
 	}
 	
-	@RequestMapping(value = "/LogIn", method = RequestMethod.POST)
-	public ModelAndView LogIn(@RequestParam("mId") String mId , @RequestParam("mPwd") String mPwd) {
-		System.out.println("로그인 도착");
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("mId" , mId);
-		mav.addObject("mPwd" , mPwd);
-		mav.setViewName("logInForm");
+	@RequestMapping(value = "/LogIn", method = {RequestMethod.POST})
+	public ModelAndView LogIn(@ModelAttribute Member m) {
+		ModelAndView mav = null;
+		m.setServiceCode("A");
+		mav = auth.entrance(m);
 		return mav;
 	}
+
 	
 }
+
