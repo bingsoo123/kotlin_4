@@ -22,7 +22,7 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="icia.kotlin.controller" />
-	
+	<context:annotation-config/>
 	
 	
 </beans:beans>
