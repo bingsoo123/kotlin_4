@@ -10,12 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import icia.kotlin.beans.Beans;
+import icia.kotlin.mapper.Mapper;
 import icia.kotlin.services.Authentication;
 
 @Controller
@@ -48,18 +50,15 @@ public class HomeController {
 	public ModelAndView LogInForm() {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("logInForm");
+		System.out.println("999");
 		return mav;
 	}
 	
-	@RequestMapping(value = "/LogIn", method = {RequestMethod.POST})
-	public ModelAndView LogIn(@ModelAttribute Beans m) {
-		System.out.println("로그인 도착");
-		
-		ModelAndView mav = null;
-		m.setServiceCode("A");
-		
-		mav=auth.entrance(m);
-		return mav;
+	@RequestMapping(value = "/{str}", method = RequestMethod.POST)
+	public ModelAndView LogIn(@ModelAttribute Beans m,@PathVariable String str) {
+		m.setService(str);
+		System.out.println("5559");
+
+		return auth.entrance(m);
 	}
-	
 }

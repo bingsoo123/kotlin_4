@@ -1,5 +1,10 @@
 package icia.kotlin.mapper;
 
-public interface Mapper {
+import icia.kotlin.beans.Beans;
 
+public interface Mapper {
+   
+   public int isMember(Beans m);
+   public int isAccess(Beans m);
+   public Beans getMemberInfo(Beans m);
 }

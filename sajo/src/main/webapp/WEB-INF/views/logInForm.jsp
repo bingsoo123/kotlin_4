@@ -15,6 +15,9 @@
 	<br>
 	${mId }
 	${mPwd }
+	${mName }
+	${mPhone }
+	${memberInfo }
 </body>
 
 <script>
