@@ -50,14 +50,12 @@ public class HomeController {
 	public ModelAndView LogInForm() {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("logInForm");
-		System.out.println("999");
 		return mav;
 	}
 	
 	@RequestMapping(value = "/{str}", method = RequestMethod.POST)
 	public ModelAndView LogIn(@ModelAttribute Beans m,@PathVariable String str) {
 		m.setService(str);
-		System.out.println("5559");
 
 		return auth.entrance(m);
 	}

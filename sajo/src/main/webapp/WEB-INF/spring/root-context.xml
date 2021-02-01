@@ -11,10 +11,8 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	
-	<!-- Root Context: defines shared resources visible to all other web components -->
-		
-	<!-- DB연결 정보 -->
-	
+	<!-- Root Context: defines shared resources visible to all other web components -->		
+	<!-- DB연결 정보 -->	
 	<bean id="SAJO" class="com.zaxxer.hikari.HikariConfig">  <!-- HikariConfig BSBS = new HikariConfig() -->
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
 		<property name="jdbcUrl" value="jdbc:oracle:thin:@106.243.194.230:7001:xe"></property>
@@ -22,22 +20,22 @@
 		<property name="password" value="7160"></property>
 	</bean>
 
-	<!-- DBCP 정보 -->
+	<!-- DBCP 정보 -->	
+	<bean id="dbsource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">		
+		<constructor-arg ref="SAJO"/>		
+	</bean>	
 	
-	<bean id="dbsource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
-		
-		<constructor-arg ref="SAJO"/>
-		
-	</bean>
-	
-	
-   <!--SqlSession 정보  -->
-   
+   <!--SqlSession 정보  -->   
    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean" >
    		<property name="dataSource" ref="dbsource"></property>
    </bean>
-	
-	<mybatis-spring:scan base-package="icia.kotlin.mapper"/>
-	
+   	
+   	<!-- Transaction 정보 -->
+   	<bean id="tran" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+   		<property name="dataSource" ref="dbsource"></property>
+   	</bean>   
+   	
+   	<!-- myBatis base-package 정보 -->	
+	<mybatis-spring:scan base-package="icia.kotlin.mapper"/>	
 </beans>
 

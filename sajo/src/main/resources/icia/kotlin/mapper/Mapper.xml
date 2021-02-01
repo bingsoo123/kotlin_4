@@ -11,4 +11,7 @@
     <select id="getMemberInfo" resultType="icia.kotlin.beans.Beans">
        SELECT ST_ID AS mId, ST_NAME AS mName, ST_PHONE AS mPhones FROM ST WHERE ST_ID=#{mId} AND ST_PASSWORD=#{mPwd}
     </select>
+    <insert id="insCustomer">
+    	INSERT INTO ST(ST_ID, ST_NAME, ST_PASSWORD, ST_PHONE) VALUES(#{mId}, #{mName}, #{mPwd}, #{mPhones})
+    </insert>
 </mapper>   

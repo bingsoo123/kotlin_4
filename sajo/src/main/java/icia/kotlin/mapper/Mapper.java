@@ -7,4 +7,5 @@ public interface Mapper {
    public int isMember(Beans m);
    public int isAccess(Beans m);
    public Beans getMemberInfo(Beans m);
+   public int insCustomer(Beans m);
 }
