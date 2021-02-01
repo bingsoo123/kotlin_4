@@ -13,8 +13,8 @@
 	<input type="button" value="서버 요청" onClick="moveLoginForm()"/>
 	
 	<br>
-	${mId }<br/>
-	${mPwd }<br/>
+	${member.getMId() }<br/>
+	${member.getMName() }<br/>
 
 	
 </body>
@@ -35,6 +35,7 @@ function moveLoginForm(){
 	
 	form.appendChild(mId);
 	form.appendChild(mPwd);
+	
 	
 	document.body.appendChild(form);
 	

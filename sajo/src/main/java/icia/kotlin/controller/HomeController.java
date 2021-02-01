@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import icia.kotlin.bean.Member;
+import icia.kotlin.bean.Movie;
+import icia.kotlin.mapper.Mapper;
 import icia.kotlin.services.Authentication;
+import icia.kotlin.services.Reservation;
 
 
 @Controller
@@ -26,22 +29,15 @@ public class HomeController {
 	
 	@Autowired
 	private Authentication auth;
+	@Autowired
+	private Reservation res;
+
+	private ModelAndView mv;
+	
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView home(Locale locale, ModelAndView mv) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		String formattedDate = dateFormat.format(date);
-		
-		mv.addObject("welcome","어서오세요 ~ 환영합니다");
-		mv.addObject("hello","감사합니다");
-		mv.addObject("serverTime", formattedDate );
-		
-		mv.setViewName("home");
-		
+	public ModelAndView home(@ModelAttribute Movie movie) {
+		mv = res.entrance(movie);
 		return mv;
 	}
 	
@@ -57,6 +53,7 @@ public class HomeController {
 		ModelAndView mav = null;
 		m.setServiceCode("A");
 		mav = auth.entrance(m);
+		
 		return mav;
 	}
 
