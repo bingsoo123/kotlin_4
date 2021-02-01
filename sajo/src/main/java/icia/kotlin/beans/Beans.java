@@ -10,5 +10,6 @@ public class Beans {
 	private String mPwd;
 	private String service;
 	private String date;
+	private String mPhone;
 	
 }

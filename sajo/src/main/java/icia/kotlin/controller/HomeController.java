@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import icia.kotlin.beans.Beans;
+import icia.kotlin.beans.Movie;
 import icia.kotlin.mapper.Mapper;
 import icia.kotlin.services.Authentication;
+import icia.kotlin.services.Reservation;
 
 
 @Controller
@@ -28,23 +30,17 @@ public class HomeController {
 	
 	@Autowired
 	private Authentication auth;
+	@Autowired
+	private Reservation reser;
+	
+	ModelAndView mav = null;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView home(Locale locale, ModelAndView mv) {
-		logger.info("Welcome home! The client locale is {}.", locale);
+	public ModelAndView home(@ModelAttribute Movie movie) {
 		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		mav = reser.entrance(movie);
 		
-		String formattedDate = dateFormat.format(date);
-		
-		mv.addObject("welcome","어서오세요 ~ 환영합니다");
-		mv.addObject("hellow","감사합니다");
-		mv.addObject("serverTime", formattedDate );
-		
-		mv.setViewName("home");
-		
-		return mv;
+		return mav;
 	}
 	
 	@RequestMapping(value = "/LogInForm", method = {RequestMethod.GET,RequestMethod.POST})
