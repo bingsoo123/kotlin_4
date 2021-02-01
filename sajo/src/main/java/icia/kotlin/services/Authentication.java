@@ -43,15 +43,6 @@ public class Authentication {
 					mav.addObject("MPwd", this.getMemberInfo(m).getMPwd());
 					mav.addObject("mPhone", this.getMemberInfo(m).getMPhones());
 					
-					m.setMId("CUS9");					
-					m.setMName("soo");
-					m.setMPwd("9876");
-					m.setMPhones("01012345678");
-					
-					/* TRANSACTION 처리 : ST INSERT */
-					this.insCustomer(m);
-					System.out.println("customer");
-					tran.commit(status);
 				}
 			}
 		}catch(Exception e) {			
@@ -81,8 +72,5 @@ public class Authentication {
 	}
 
 	/* TRANSACTION 처리를 위한 메서드 1 : ST INSERT */
-	private boolean insCustomer(Beans m) {
-		return convertToBoolean(mapper.insCustomer(m));
-	}
 	/* TRANSACTION 처리를 위한 메서드 2 : MV INSERT */
 }
