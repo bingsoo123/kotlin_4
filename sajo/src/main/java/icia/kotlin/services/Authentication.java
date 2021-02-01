@@ -2,6 +2,7 @@ package icia.kotlin.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.web.servlet.ModelAndView;
 
 import icia.kotlin.beans.Beans;
@@ -12,13 +13,18 @@ public class Authentication {
 
 	@Autowired
 	private Mapper mapper;
+	@Autowired
+	private PlatformTransactionManager tran;  // 클래스명이 100% 일치하는게 아닌경우 Autowired할땐 id값과 변수이름이 같아야함
 
 	public Authentication() {
 	}
 
 	public ModelAndView entrace(Beans bean) {
+		
 		ModelAndView mav = null;
 
+		
+		
 		if (bean.getService().equals("LogIn")) {
 			mav = this.LoginCtl(bean);
 		}
@@ -33,6 +39,9 @@ public class Authentication {
 			if (this.isPass(bean)) {
 				
 				mav.addObject("bean" , this.selectMember(bean));
+				/* Tran 처리  :: ST INSERT */
+					
+				/* Tran 처리  :: ST INSERT */
 				
 			}
 		}

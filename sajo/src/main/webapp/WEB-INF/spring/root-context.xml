@@ -37,6 +37,12 @@
    		<property name="dataSource" ref="dbsource"></property>
    </bean>
    
+   
+   <!-- Transaction 정보 -->
+   <bean id="tran" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+   		<property name="dataSource" ref="dbsource"></property>
+   </bean>
+   
    <mybatis-spring:scan base-package="icia.kotlin.mapper"/>
 	
 	
