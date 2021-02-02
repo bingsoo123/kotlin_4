@@ -5,7 +5,7 @@
 <mapper namespace="icia.kotlin.mapper.ReservationIf">
    <select id="getMovieList" resultType="icia.kotlin.beans.Movie">
       <![CDATA[
-      	SELECT MV_CODE AS mvCode , MV_GRADE AS mvGrade , MV_STATUS AS mvStatus , MV_IMAGE AS mvImaage, MV_COMMENTS AS mvComment FROM MV WHERE MV_STATUS !='B'
+      	SELECT MV_CODE AS mvCode , MV_NAME AS mvName ,MV_GRADE AS mvGrade , MV_STATUS AS mvStatus , MV_IMAGE AS mvImage, MV_COMMENTS AS mvComment FROM MV WHERE MV_STATUS !='B'
       ]]>
    </select>
 </mapper>
