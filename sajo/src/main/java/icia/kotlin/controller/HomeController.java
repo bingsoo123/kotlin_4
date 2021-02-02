@@ -34,14 +34,15 @@ public class HomeController {
 	ModelAndView mav = null;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView home(@ModelAttribute Movie movie) {			
+	public ModelAndView home(@ModelAttribute Movie movie) {		
+		movie.setSCode("0");
 		mav = reservation.entrance(movie);
 		return mav;
-	}
+	}	
 	
 	@RequestMapping(value = "/LogInForm", method = {RequestMethod.GET,RequestMethod.POST})
 	public ModelAndView LogInForm() {
-		mav = new ModelAndView();
+		ModelAndView mav = new ModelAndView();
 		mav.setViewName("logInForm");
 		return mav;
 	}
@@ -54,9 +55,9 @@ public class HomeController {
 	}
 	@RequestMapping(value = "/goData", method = {RequestMethod.GET,RequestMethod.POST})
 	public ModelAndView step(@ModelAttribute Movie movie) {
-		System.out.println("진입성공");
-		System.out.println("코드="+movie.getMvCode());
+		System.out.println("진입성공 sCode=" + movie.getSCode());
 		
-		return mav;
+		
+		return reservation.entrance(movie);
 	}
 }

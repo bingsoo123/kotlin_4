@@ -3,6 +3,7 @@ package icia.kotlin.services;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +29,46 @@ public class Reservation {
 			mav = this.movieListCtl();
 		}else {
 			switch(movie.getSCode()) {
-			case "":
-			
-			break;
+			case "1":
+				mav = this.movieDetail(movie);
+				break;
 			}
 		}
 		return mav;
+	}
+
+	private ModelAndView movieDetail(Movie movie) {
+		
+		//System.out.println("movieDetail success");
+		
+		ModelAndView mav = new ModelAndView();
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
+		
+		//System.out.println("코멘트=" + this.getMovieDetail(movie).getMvComments());
+		
+		mav.addObject("Image", this.getMovieDetail(movie).getMvImage());
+		mav.addObject("Name", this.getMovieDetail(movie).getMvName());
+		mav.addObject("Grade", this.getMovieDetail(movie).getMvGrade());
+		mav.addObject("Comments", this.getMovieDetail(movie).getMvComments());
+		
+		mav.addObject("one", sdf.format(cal.getTime()));
+		cal.add(Calendar.DATE, +1);
+		mav.addObject("two", sdf.format(cal.getTime()));
+		cal.add(Calendar.DATE, +1);
+		mav.addObject("three", sdf.format(cal.getTime()));
+		cal.add(Calendar.DATE, +1);
+		mav.addObject("four", sdf.format(cal.getTime()));
+		cal.add(Calendar.DATE, +1);
+		mav.addObject("five", sdf.format(cal.getTime()));
+		
+		mav.setViewName("movieDetail");
+		return mav;
+	}
+
+	private Movie getMovieDetail(Movie movie) {
+		
+		return mapper.getMovieDetail(movie);
 	}
 
 	private ModelAndView movieListCtl() {

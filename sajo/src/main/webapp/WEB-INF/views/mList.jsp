@@ -22,15 +22,9 @@
       <div class="menu">오시는길</div>
    </nav>
 
-
-
    <section class="section">
-
       ${MovieList }
-
    </section>
-
-   <footer> </footer>
 
 </body>
 
@@ -39,16 +33,13 @@
 function goData(mvcode){
    
    alert("OK");
+   location.href="/goData?mvCode="+mvcode+"&sCode=1";
    
-   var form = document.createElement("form");
-   
-   form.action="goData?mvCode="+mvcode;
-   form.method="POST";
-   
-   document.body.appendChild(form);
-   
-   form.submit();
-   
+   //var form = document.createElement("form");  
+   //form.action="goData?mvCode="+mvcode;
+   //form.method="POST";   
+   //document.body.appendChild(form);   
+   //form.submit();
 }
 
 </script>
