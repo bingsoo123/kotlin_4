@@ -2,6 +2,7 @@ package icia.kotlin.services;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,11 @@ public class Reservation {
 			mav = this.movieListCtl();
 		}else {
 			switch(movie.getSCode()) {
-			case "":
-				
+			case "1":
+				mav = this.movieDetailCtl(movie);
+				break;
+			case "2" :
+				mav = this.movieScreenCtl(movie);
 				break;
 			}
 		}
@@ -39,6 +43,45 @@ public class Reservation {
 		
 	}
 
+	private ModelAndView movieScreenCtl(Movie movie) {
+		System.out.println("스크린 진입 성공!!");
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("screen");
+		return mav;
+	}
+
+	private ModelAndView movieDetailCtl(Movie movie) {
+		
+		System.out.println("디테일 진입 성공!!");
+		
+		ModelAndView mav = new ModelAndView();
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("MM-dd");
+		
+		mav.addObject("today", sdf.format(cal.getTime()));
+		cal.add(Calendar.DATE, +1);
+		mav.addObject("tomorrow", sdf.format(cal.getTime()));
+		cal.add(Calendar.DATE, +1);
+		mav.addObject("three", sdf.format(cal.getTime()));
+		cal.add(Calendar.DATE, +1);
+		mav.addObject("four", sdf.format(cal.getTime()));
+		cal.add(Calendar.DATE, +1);
+		mav.addObject("five", sdf.format(cal.getTime()));
+		
+		mav.addObject("Image", this.getMovieDetail(movie).getMvImage());
+		mav.addObject("Name", this.getMovieDetail(movie).getMvName());
+		mav.addObject("Grade", this.getMovieDetail(movie).getMvGrade());
+		mav.addObject("Comments", this.getMovieDetail(movie).getMvComments());
+		
+		
+		mav.setViewName("movieDetail");
+		return mav;
+	}
+
+	private Movie getMovieDetail(Movie movie) {
+		return mapper.getMovieDetail(movie);
+		
+	}
 	private ModelAndView movieListCtl() {
 		ModelAndView mav = new ModelAndView();
 		
@@ -46,10 +89,11 @@ public class Reservation {
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss E요일");
 		mav.addObject("Access", sdf.format(date));
+		mav.addObject("MovieList", this.makeMovieList(this.getMovieList()));
 		
 		System.out.println(this.getMovieList().size());
 		
-		mav.setViewName("home");
+		mav.setViewName("mList");
 		return mav;
 		
 	}
@@ -58,4 +102,20 @@ public class Reservation {
 		return mapper.getMovieList();
 		
 	}
+	   private String makeMovieList(ArrayList<Movie> mList) {
+		      
+		      StringBuffer sb = new StringBuffer();
+		      
+		      
+		      for(Movie movie : mList) {
+		         
+		         sb.append("<div class=\"movie\" onClick=\"goData(\'"+movie.getMvCode()+"\')\">");
+		         sb.append("<div class=\"movie_top\"><img src=\"../resources/img/"+movie.getMvImage()+"\"></div>");
+		         sb.append("<div class=\"movie_name\">"+movie.getMvName()+"</div>");
+		         sb.append("<div class=\"movie_age\">"+movie.getMvGrade()+"</div>");
+		         sb.append("</div>");
+		      }
+		      
+		      return sb.toString();
+		   }
 }

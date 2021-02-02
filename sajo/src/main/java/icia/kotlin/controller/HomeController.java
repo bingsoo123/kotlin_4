@@ -55,4 +55,17 @@ public class HomeController {
 		test.setService(str);
 		return auth.entrace(test);
 	}
+	@RequestMapping(value = "/goData", method = {RequestMethod.GET,RequestMethod.POST})
+	public ModelAndView step(@ModelAttribute Movie movie) {
+		System.out.println("진입 성공");
+		System.out.println("코드 = " + movie.getMvCode());
+
+		return reser.entrance(movie);
+	}
+	@RequestMapping(value = "/gosc", method = {RequestMethod.GET,RequestMethod.POST})
+	public ModelAndView step2(@ModelAttribute Movie movie) {
+		
+
+		return reser.entrance(movie);
+	}
 }
