@@ -22,6 +22,8 @@ public class MovieList {
 	private Reservation mapper;
 	@Autowired
 	private PlatformTransactionManager tran;
+	@Autowired
+	private Gson son;
 	
 	public ModelAndView entrance(Movie movie) {
 		
@@ -35,7 +37,7 @@ public class MovieList {
 			
 			switch(movie.getSCode()) {
 			case"1":
-				mv = this.movieDetail(movie);
+				mv = this.screeningDate(movie);
 				break;
 			case"2":
 				mv = this.selectScreen(movie);
@@ -44,6 +46,31 @@ public class MovieList {
 			}
 			
 		}
+		
+		return mv;
+	}
+	
+	private ModelAndView screeningDate(Movie movie) {
+		
+		ModelAndView mv = new ModelAndView();
+		
+		/* Start Date */
+		mv.addObject("Access",this.getCurrentDate('d'));
+		
+		String[] day = movie.getMvDate().split(":");
+		
+		mv.addObject("today",day[0]);
+		mv.addObject("tomorrow",day[1]);
+		mv.addObject("three",day[2]);
+		mv.addObject("four",day[3]);
+		mv.addObject("five",day[4]);
+		
+		/* Movie Info & Convert to JSON */
+		String jsonData = son.toJson(this.getMovieDetail(movie));
+		mv.addObject("movieData",jsonData);
+		
+		/* VIEW */
+		mv.setViewName("step2");
 		
 		return mv;
 	}
@@ -61,6 +88,7 @@ public class MovieList {
 			
 			Gson son = new Gson();
 			String sonData = son.toJson(this.getScreen(movie));
+			System.out.println(sonData);
 			mv.addObject("sList" , sonData);
 		}
 		
@@ -74,16 +102,11 @@ public class MovieList {
 
 	private ModelAndView movieDetail(Movie movie) {
 		
-		System.out.println("디테일진입");
-		
 		ModelAndView mv = new ModelAndView();
 		
-		String[] day = movie.getMvDate().split(":");
+		mv.addObject("Access",this.getCurrentDate('d'));
 		
-		System.out.println("첫쨰날"+day[0]);
-		System.out.println("둘쨰날"+day[1]);
-		System.out.println("셋쨰날"+day[2]);
-		System.out.println("넷쨰날"+day[3]);
+		String[] day = movie.getMvDate().split(":");
 		
 		System.out.println("영화이름 = " + this.getMovieDetail(movie).getMvName());
 		mv.addObject("Image", this.getMovieDetail(movie).getMvImage());
@@ -103,6 +126,17 @@ public class MovieList {
 		return mv;
 	}
 	
+	private String getCurrentDate(char dateType) {
+		
+		Date date = new Date();
+		
+		SimpleDateFormat sdf = (dateType=='f')? new SimpleDateFormat("YYYY-MM-dd HH:mm:ss E요일"):
+				(dateType=='d') ? new SimpleDateFormat("YYYY-MM-dd"):
+					(dateType=='t') ? new SimpleDateFormat("HH:mm E요일") : null;
+		
+		return sdf.format(date);
+	}
+	
 	private Movie getMovieDetail(Movie movie) {
 		
 		return mapper.getMovieDetail(movie);
@@ -111,16 +145,11 @@ public class MovieList {
 	private ModelAndView movieListCtl() {
 		
 		ModelAndView mv = new ModelAndView();
+		mv.addObject("Access" , this.getCurrentDate('d'));
 		
-		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		mv.addObject("Access" , sdf.format(date));
-//		mv.addObject("MovieList" , this.makeMovieList(this.getmovieList()));
-		
-		Gson son = new Gson();
 		String jsonData = son.toJson(this.getmovieList());
-		System.out.println(jsonData);
 		mv.addObject("jsonMovie" , jsonData);
+		
 		mv.setViewName("mList");
 		
 		return mv;

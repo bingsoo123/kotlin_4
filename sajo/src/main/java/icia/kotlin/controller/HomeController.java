@@ -56,10 +56,9 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/goScreen", method = {RequestMethod.GET,RequestMethod.POST})
-	public ModelAndView step3(@ModelAttribute Movie movie) {
-		System.out.println("Screen진입성공");
+	public String step3(@ModelAttribute Movie movie) {
 		System.out.println(movie.getMvDate()+" :: " + movie.getMvCode());
-		return mList.entrance(movie);
+		return mList.entrance(movie).getModel().get("sList").toString();
 	}
 	
 }
