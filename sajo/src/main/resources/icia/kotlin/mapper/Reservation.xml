@@ -8,4 +8,16 @@
 		SELECT MV_CODE AS mvCode , MV_NAME AS mvName ,MV_GRADE AS mvGrade , MV_STATUS AS mvStatus , MV_IMAGE AS mvImage, MV_COMMENTS AS mvComment FROM MV WHERE MV_STATUS !='B'
 	  ]]>
 	</select>
+	
+	<select id="getMovieDetail" resultType="icia.kotlin.beans.Movie">
+		SELECT MV_CODE AS mvCode , MV_NAME AS mvName ,MV_GRADE AS mvGrade , MV_STATUS AS mvStatus , MV_IMAGE AS mvImage, MV_COMMENTS AS mvComment FROM MV WHERE MV_CODE =#{mvCode}
+	</select>
+	
+	<select id="getScreenList" resultType="icia.kotlin.beans.Movie">
+		SELECT MVCODE , MVNAME , MVGRADE , SC AS MVSCREEN , TO_CHAR(MTIME,'HH24MI') AS MVTIME FROM TESTER WHERE TO_CHAR(MTIME,'YYYY-MM-DD') = #{mvDate} AND MVCODE=#{mvCode}  
+	</select>
+	
+	<select id="isMovie" resultType="int">
+		SELECT COUNT(*) FROM SM WHERE SI_MVCODE=#{mvCode} AND TO_CHAR(SI_DATETIME,'YYYY-MM-DD')=#{mvDate}
+	</select>
 </mapper>

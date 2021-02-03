@@ -7,8 +7,7 @@
 </head>
 <body>
 
-<a href="/LogInForm">로그인 폼 이동</a>
-<p> Now Time : ${Access }
+${sList }
 
 </body>
 </html>

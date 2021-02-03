@@ -52,10 +52,14 @@ public class HomeController {
 	
 	@RequestMapping(value = "/goData", method = {RequestMethod.GET,RequestMethod.POST})
 	public ModelAndView step(@ModelAttribute Movie movie) {
-		System.out.println("진입성공");
-		System.out.println("코드= " + movie.getMvCode());
-		
-		return mv;
+		return mList.entrance(movie);
+	}
+	
+	@RequestMapping(value = "/goScreen", method = {RequestMethod.GET,RequestMethod.POST})
+	public ModelAndView step3(@ModelAttribute Movie movie) {
+		System.out.println("Screen진입성공");
+		System.out.println(movie.getMvDate()+" :: " + movie.getMvCode());
+		return mList.entrance(movie);
 	}
 	
 }
