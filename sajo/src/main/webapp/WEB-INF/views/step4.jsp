@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Seat</title>
 </head>
 <body>
-<h2>환영합니다.</h2>
-
+<h1>좌석 선택 페이지입니다.</h1>
+<p> Now Time : ${Access }</p>
 </body>
 </html>

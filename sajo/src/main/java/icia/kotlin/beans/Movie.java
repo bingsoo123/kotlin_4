@@ -11,4 +11,10 @@ public class Movie {
 	public String MvStatus;
 	public String MvImage;
 	public String MvComments;
+	public String MvDate;
+	public String MvScreen;
+	public String MvTime;
+	private String MvThCode;
+	private String MvDateTime;
+
 }

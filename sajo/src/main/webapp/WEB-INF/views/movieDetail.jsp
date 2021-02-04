@@ -18,17 +18,18 @@ background-size: 100%;
 
 <div class="center">
 <span class="choice">예매 날짜 선택</span>
-<span class="c" onClick="fuck()">${today }</span>
-<span class="c">${tomorrow }</span>
-<span class="c">${three }</span>
-<span class="c">${four }</span>
-<span class="c">${five }</span>
+<span class="c" onClick="goScreen('${today}')">${today }</span>
+<span class="c" onClick="goScreen('${tomorrow}')">${tomorrow }</span>
+<span class="c" onClick="goScreen('${three}')">${three }</span>
+<span class="c" onClick="goScreen('${four}')">${four }</span>
+<span class="c" onClick="goScreen('${five}')">${five }</span>
 </div>
+
 <br>
 <div class="movie" style="margin : auto 0px; background-color:white;">
 
 	<div class="movie_top">
-		<img src="../resources/img/${Image }"style="margin-left: 40%;">
+		<img src="../resources/img/${Image }">
 	</div>
 	<div class="movie_name">${Name }</div>
 	<div class="movie_age">${Grade }</div>
@@ -42,11 +43,9 @@ background-size: 100%;
 
 </body>
 <script>
- function fuck(){
-	 
-	 alert("OK");
-	   
-	  location.href="/gosc?"+"sCode=2";
- }
+function goScreen(zz){
+	
+	location.href = "/Step2?mvDate="+zz+"&mvCode="+${mvCode}+"&sCode=2";
+}
 </script>
 </html>

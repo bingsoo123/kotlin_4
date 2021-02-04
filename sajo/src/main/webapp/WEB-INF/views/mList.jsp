@@ -26,9 +26,9 @@
 
 
 
-   <section class="section">
+   <section id="Zone">
 
-      ${MovieList }
+      
 
    </section>
 
@@ -38,12 +38,53 @@
 
 <script>
 
-function goData(mvcode){
-   
-   alert("OK");
-   
-  location.href="/goData?mvCode="+mvcode+"&sCode=1";
-   
+
+let section = document.getElementById("Zone");
+let movieList = JSON.parse('${jsonMovie}');
+let record = parseInt(movieList.length / 5);
+record = (movieList.length % 5 > 0) ? record + 1 : record;
+for (rIndex = 0; rIndex < record; rIndex++) {
+   let div = document.createElement('Div');
+   div.style.display = "inline-flex";
+   div.setAttribute("name", "line");
+   section.appendChild(div);
+}
+for (index = 0; index < movieList.length; index++) {
+   let rDivIndex = parseInt(index / 5);
+   let mvDiv = document.createElement('Div');
+   mvDiv.style.width = "150px";
+   mvDiv.style.height = "300px";
+   mvDiv.style.margin = "0px 10px 20px 0px";
+   mvDiv.style.backgroundImage = "url(/resources/img/"
+         + movieList[index].MvImage + ")"
+   mvDiv.style.backgroundSize = "contain";
+   mvDiv.style.cursor = "pointer";
+   let mvCode = movieList[index].MvCode;
+   mvDiv.addEventListener('click', function() {
+      goData(mvCode);
+   });
+   let line = document.getElementsByName("line")[rDivIndex];
+   line.appendChild(mvDiv);
+}
+
+function goData(mvcode) {
+
+   var data = "${Access}:";
+   let now = new Date();
+   let tester = "&mvDate=" + data;
+   alert(mvcode);
+
+   for (var index = 1; index <= 5; index++) {
+      now.setDate(now.getDate() + 1);
+      tester += now.getFullYear() + "-";
+      tester += (now.getMonth() + 1) >= 10 ? (now.getMonth() + 1) : '0'
+            + (now.getMonth() + 1) + "-";
+      tester += now.getDate() >= 10 ? now.getDate() : '0' + now.getDate();
+      (index == 5) ? tester += "" : tester += ":";
+
+   }
+   location.href = "/goData?MvCode=" + mvcode + "&sCode=1" + tester;
+
 }
 
 </script>

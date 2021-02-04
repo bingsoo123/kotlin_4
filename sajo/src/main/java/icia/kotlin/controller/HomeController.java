@@ -1,5 +1,7 @@
 package icia.kotlin.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import icia.kotlin.beans.Beans;
@@ -50,6 +53,13 @@ public class HomeController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/home", method = {RequestMethod.GET,RequestMethod.POST})
+	public ModelAndView home() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("home");
+		return mav;
+	}
+	
 	@RequestMapping(value = "/{str}", method = RequestMethod.POST)
 	public ModelAndView LogIn(@ModelAttribute Beans test,@PathVariable String str) {
 		test.setService(str);
@@ -59,13 +69,26 @@ public class HomeController {
 	public ModelAndView step(@ModelAttribute Movie movie) {
 		System.out.println("진입 성공");
 		System.out.println("코드 = " + movie.getMvCode());
-
 		return reser.entrance(movie);
 	}
-	@RequestMapping(value = "/gosc", method = {RequestMethod.GET,RequestMethod.POST})
+	// Step2
+	@RequestMapping(value = "/Step2", method = {RequestMethod.GET,RequestMethod.POST})
 	public ModelAndView step2(@ModelAttribute Movie movie) {
+		System.out.println("스크린진입 성공");
 		
-
 		return reser.entrance(movie);
-	}
+}
+	@RequestMapping(value = "/Step3", method = {RequestMethod.GET,RequestMethod.POST})
+	@ResponseBody
+	public String step3(@ModelAttribute Movie movie) throws UnsupportedEncodingException{
+		System.out.println("Step3 진입 성공");
+		
+		return URLEncoder.encode(reser.entrance(movie).getModel().get("ScreeningData").toString(),"UTF-8");
+}
+	@RequestMapping(value = "/Step4", method = {RequestMethod.GET,RequestMethod.POST})
+	public ModelAndView step4(@ModelAttribute Movie movie) {
+		System.out.println("Step4 진입 성공");
+		
+		return reser.entrance(movie);
+}
 }
