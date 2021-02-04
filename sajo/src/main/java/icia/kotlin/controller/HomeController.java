@@ -1,5 +1,7 @@
 package icia.kotlin.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import icia.kotlin.beans.Beans;
@@ -34,11 +37,17 @@ public class HomeController {
 	ModelAndView mav = null;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView home(@ModelAttribute Movie movie) {		
-		movie.setSCode("0");
+	public ModelAndView home(@ModelAttribute Movie movie) {				
 		mav = reservation.entrance(movie);
 		return mav;
 	}	
+	
+	//@RequestMapping(value = "/Step2", method = {RequestMethod.GET,RequestMethod.POST})
+	//public ModelAndView step2(@ModelAttribute Movie movie) {
+		//mav = reservation.entrance(movie);
+		//return mav;
+	//}
+	
 	
 	@RequestMapping(value = "/LogInForm", method = {RequestMethod.GET,RequestMethod.POST})
 	public ModelAndView LogInForm() {
@@ -50,14 +59,20 @@ public class HomeController {
 	@RequestMapping(value = "/{str}", method = RequestMethod.POST)
 	public ModelAndView LogIn(@ModelAttribute Beans m,@PathVariable String str) {
 		m.setService(str);
-
 		return auth.entrance(m);
 	}
+	
 	@RequestMapping(value = "/goData", method = {RequestMethod.GET,RequestMethod.POST})
 	public ModelAndView step(@ModelAttribute Movie movie) {
-		System.out.println("진입성공 sCode=" + movie.getSCode());
-		
-		
 		return reservation.entrance(movie);
+	}
+
+	@RequestMapping(value = "/goScreen", method = {RequestMethod.GET,RequestMethod.POST})
+	@ResponseBody
+	public String goScreen(@ModelAttribute Movie movie) throws UnsupportedEncodingException {	
+		System.out.println("도착" + movie.getMvDate());
+		reservation.entrance(movie);
+		//return URLEncoder.encode(mav.getModel().get("ScreeningData").toString(), "UTF-8");
+		return URLEncoder.encode(reservation.entrance(movie).getModel().get("ScreeningData").toString(),"UTF-8");
 	}
 }

@@ -17,10 +17,16 @@
 		<div>${Comments }</div>
 	</div>
 	
-	<div>${one }</div>
-	<div>${two }</div>
-	<div>${three }</div>
-	<div>${four }</div>
-	<div>${five }</div>
+	<div class="button" onclick="goScreen('${today }')">${today }</div>
+	<div class="button" onclick="goScreen('${tomorrow }')">${tomorrow }</div>
+	<div class="button" onclick="goScreen('${three }')">${three }</div>
+	<div class="button" onclick="goScreen('${four }')">${four }</div>
+	<div class="button" onclick="goScreen('${five }')">${five }</div>
 </body>
+<script>
+function goScreen(gs){
+	let test = gs;
+	location.href="/goScreen?mvDate="+gs+"&mvCode="+${mvCode} + "&sCode=2";
+}
+</script>
 </html>
