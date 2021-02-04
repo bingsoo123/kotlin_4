@@ -40,17 +40,33 @@ public class Reservation {
             mv = this.screeningDate(movie);
             break;
          case"2":
-        	System.out.println("cas2도착");
             mv = this.selectScreen(movie);
             break;
+         case"3":
+         	System.out.println("case3도착");
+             mv = this.selectSeat(movie);
+            break;  
          default:
-				break;   
+			break;   
          }         
       }      
       return mv;
    }
+   
+   /* Select Seat(좌석선택) */
+   private ModelAndView selectSeat(Movie movie) {
+	   ModelAndView mv = null;
+	   System.out.println(movie.getMvCode());
+	   System.out.println(movie.getMvThCode());
+	   System.out.println(movie.getMvScreen());
+	   System.out.println(movie.getMvDateTime());
+	   
+	   mv.addObject("Access", this.getCurrentDate('f'));
+	   mv.setViewName("step4");
+	   return mv;
+}
 
-   /* Screening Date(날짜선택) */
+/* Screening Date(날짜선택) */
 	private ModelAndView screeningDate(Movie movie) {
 		
 		ModelAndView mv = new ModelAndView();

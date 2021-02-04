@@ -2,28 +2,23 @@ package icia.kotlin.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import icia.kotlin.beans.Beans;
 import icia.kotlin.beans.Movie;
-import icia.kotlin.mapper.Mapper;
 import icia.kotlin.services.Authentication;
 import icia.kotlin.services.Reservation;
+
 
 @Controller
 public class HomeController {
@@ -41,14 +36,7 @@ public class HomeController {
 		mav = reservation.entrance(movie);
 		return mav;
 	}	
-	
-	//@RequestMapping(value = "/Step2", method = {RequestMethod.GET,RequestMethod.POST})
-	//public ModelAndView step2(@ModelAttribute Movie movie) {
-		//mav = reservation.entrance(movie);
-		//return mav;
-	//}
-	
-	
+		
 	@RequestMapping(value = "/LogInForm", method = {RequestMethod.GET,RequestMethod.POST})
 	public ModelAndView LogInForm() {
 		ModelAndView mav = new ModelAndView();
@@ -74,5 +62,15 @@ public class HomeController {
 		reservation.entrance(movie);
 		//return URLEncoder.encode(mav.getModel().get("ScreeningData").toString(), "UTF-8");
 		return URLEncoder.encode(reservation.entrance(movie).getModel().get("ScreeningData").toString(),"UTF-8");
+	}
+
+	@RequestMapping(value = "/step4", method = {RequestMethod.GET,RequestMethod.POST})
+	@ResponseBody
+	public String step4(@ModelAttribute Movie movie) throws UnsupportedEncodingException {
+		System.out.println("영화코드:" + movie.getMvCode());
+		System.out.println("상영관:" + movie.getMvScreen());
+		System.out.println("상영시간:"+movie.getMvTime());
+		System.out.println("극장코드:"+movie.getMvThCode());
+		return null;
 	}
 }
