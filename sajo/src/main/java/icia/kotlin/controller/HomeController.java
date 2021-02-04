@@ -1,5 +1,7 @@
 package icia.kotlin.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import icia.kotlin.bean.Member;
@@ -32,8 +35,11 @@ public class HomeController {
 	@Autowired
 	private Reservation res;
 
+	
+	
 	private ModelAndView mv;
 	
+	ModelAndView mav = null;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home(@ModelAttribute Movie movie) {
@@ -56,7 +62,42 @@ public class HomeController {
 		
 		return mav;
 	}
-
+	@RequestMapping(value = "/goData", method = {RequestMethod.GET,RequestMethod.POST})
+	public ModelAndView step(@ModelAttribute Movie movie) {
+		
+		
+		return res.entrance(movie);
 	
-}
+	}
+	@RequestMapping(value = "/goData2", method = {RequestMethod.GET,RequestMethod.POST})
+	public ModelAndView step2(@ModelAttribute Movie movie) {
+		
+		
+		return res.entrance(movie);
+	}
+	 @RequestMapping(value = "/goScreen", method = {RequestMethod.GET,RequestMethod.POST})
+	   public ModelAndView step3(@ModelAttribute Movie movie) {
+	      System.out.println("Screen진입성공");
+	      System.out.println(movie.getMvDate()+" :: " + movie.getMvCode());
+	      return res.entrance(movie);
+	   }
+	 @ResponseBody
+	 @RequestMapping(value = "/step4", method = {RequestMethod.GET,RequestMethod.POST})
+	   public String step4(@ModelAttribute Movie movie) throws UnsupportedEncodingException {
+	      System.out.println(movie.getSCode());
+	      System.out.println(movie.getMvCode());
+	      System.out.println(movie.getMvDate());
+	      
+	      mav = res.entrance(movie);
+	      System.out.println(mav.getModel().get("sList"));
+	      
+	      return URLEncoder.encode(mav.getModel().get("sList").toString(), "UTF-8");
+	   }
+	 @RequestMapping(value = "/step5", method = {RequestMethod.GET,RequestMethod.POST})
+		public ModelAndView step5(@ModelAttribute Movie movie) {
+			System.out.println("step5 진입 성공");
+			
+			return res.entrance(movie);
 
+	 }
+}

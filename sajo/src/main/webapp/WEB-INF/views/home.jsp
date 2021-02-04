@@ -9,6 +9,8 @@
 
 
 <P>  Now Time : ${Access}.  </P>
-<a href="/LogInForm">로그인 폼 이동</a>
+<a href="http://192.168.219.104/LogInForm">로그인 폼 이동</a>
+
 </body>
+
 </html>
