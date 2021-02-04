@@ -1,6 +1,9 @@
 package icia.kotlin.controller;
 
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import icia.kotlin.beans.Beans;
@@ -36,8 +40,7 @@ public class HomeController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "/LogInForm", method = {RequestMethod.GET,RequestMethod.POST})
-	public ModelAndView LogInForm() {
+	@RequestMapping(value = "/LogInForm", method = {RequestMethod.GET,RequestMethod.POST})	public ModelAndView LogInForm() {
 		ModelAndView mav = new ModelAndView();
 		
 		mav.setViewName("logInForm");
@@ -56,9 +59,21 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/goScreen", method = {RequestMethod.GET,RequestMethod.POST})
-	public String step3(@ModelAttribute Movie movie) {
+	@ResponseBody
+	public String step3(@ModelAttribute Movie movie) throws UnsupportedEncodingException {
 		System.out.println(movie.getMvDate()+" :: " + movie.getMvCode());
-		return mList.entrance(movie).getModel().get("sList").toString();
+		return URLEncoder.encode(mList.entrance(movie).getModel().get("sList").toString(),"UTF-8");
+	}
+	
+	@RequestMapping(value = "/step4", method = {RequestMethod.GET,RequestMethod.POST})
+	@ResponseBody
+	public String step4(@ModelAttribute Movie movie) throws UnsupportedEncodingException {
+		System.out.println("도착햇슴!");
+		System.out.println("영화코드????" + movie.getMvCode());
+		System.out.println("상영관번호??" + movie.getMvScreen());
+		System.out.println("몇시에한다고??"+movie.getMvTime());
+		System.out.println("극장이어디라고??"+movie.getMvThcode());
+		return null;
 	}
 	
 }

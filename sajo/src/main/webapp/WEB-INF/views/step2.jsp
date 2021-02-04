@@ -8,11 +8,24 @@
 <link href="${path}/resources/css/moviedetail.css" rel="stylesheet" />
 </head>
 <body onLoad="init()">
-	<P>Now Time : ${Access}</P>
+	<header>
+		<div class="title">
+			<span class="title_detail">ICIA 인천시네마</span>
+		</div>
+	</header>
+
+	<nav>
+		<div class="menu">빠른예매</div>
+		<div class="menu">상영관별예매</div>
+		<div class="menu">영화추천</div>
+		<div class="menu">오시는길</div>
+	</nav>
+
+
 	<section id="movieZone" style="display: flex;">
 		<div id="movieInfo"></div>
-		<div id="selectionDate">
 
+		<div id="selectionDate">
 			<div class="date">
 				<div class="button" onClick="goScreen('${today}')">${today }</div>
 				<div class="button" onClick="goScreen('${tomorrow }')">${tomorrow }</div>
@@ -20,11 +33,14 @@
 				<div class="button" onClick="goScreen('${four }')">${four }</div>
 				<div class="button" onClick="goScreen('${five }')">${five }</div>
 			</div>
-
 		</div>
-		<div id="selectionTime">selectionTime</div>
+		<div id="selectionTime">
+		
+		
+		
+		</div>
 	</section>
-</body> 
+</body>
 <script>
 	function init() {
 		/* Convert Date */
@@ -76,19 +92,80 @@
 		
 		request.onreadystatechange = function(){
 			
-			if(this.readyState == 4 && this.status == 20){
-				
-				console.log("서버에 갓다옴");
+			if(this.readyState == 4 && this.status == 200){ 
+				let jsonData = decodeURIComponent(request.response);
+				  gosc(jsonData);
 			}
 			
 		};
 		
-		request.open("POST","goScreen?mvDate="+tt+"&mvCode="+time+"&sCode=2",true);
-		request.send();
+		request.open("POST","goScreen",true);
+		request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+		request.send("mvDate="+tt+"&mvCode="+time+"&sCode=2");
 		//location.href = "/goScreen?mvDate="+tt+"&mvCode="+${mvCode}+"&sCode=2";
 		
 	}
 	
+	function gosc(jd){
+	
+		alert(jd);
+		
+		let movieInfo = document.getElementById("selectionTime");
+		/* Append movieInfo Div */
+		let movie =JSON.parse(jd);
+		
+		for(index=0 ; index<movie.length ; index++){
+			
+		let text=index;
+			
+		let mvSeat = document.createElement('Div');
+		mvSeat.textContent=movie[index].mvScreen;
+		mvSeat.className="selScreen";
+		movieInfo.appendChild(mvSeat);
+		
+		let mvTime = document.createElement('Div');
+		mvTime.textContent = movie[index].mvTime;
+		mvTime.addEventListener('click',function(){
+			step4(movie,text);
+		});
+		movieInfo.appendChild(mvTime);
+
+		let mvTitle = document.createElement('Div');
+		mvTitle.textContent = movie[index].mvName;
+		movieInfo.appendChild(mvTitle);
+
+		let mvGrade = document.createElement('Div');
+		mvGrade.textContent = movie[index].mvGrade;
+		movieInfo.appendChild(mvGrade);
+		}
+		
+	}	
+	
+	
+	function step4(obj,num){
+		
+		alert(obj);
+		alert(num);
+		
+		var code = obj[num].mvCode;
+		var time = obj[num].mvTime;
+		var screen = obj[num].mvScreen;
+		
+		var form = document.createElement("form");
+		form.method="POST";
+		form.action="step4?mvCode="+code+"&mvTime="+time+"&mvScreen="+screen+"&mvThcode=1";
+		
+		document.body.appendChild(form);
+		
+		form.submit();
+		
+	}
 	
 </script>
 </html>
+
+
+
+
+
+

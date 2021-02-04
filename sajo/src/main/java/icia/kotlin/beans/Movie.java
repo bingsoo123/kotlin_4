@@ -15,4 +15,5 @@ public class Movie {
 	private String mvDate;
 	private String mvTime;
 	private String mvScreen;
+	private String mvThcode;
 }
