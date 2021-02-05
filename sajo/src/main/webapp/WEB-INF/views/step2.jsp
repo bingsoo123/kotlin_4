@@ -16,7 +16,7 @@
 	</section>
 </body>
 <script>
-
+let screeningData;
 function init(){
 	/* Convert Date */
 	let dateList = document.getElementById("selectionDate")
@@ -76,7 +76,9 @@ function divClick(mvCode, date){
 	request.onreadystatechange = function(){
 		if(this.readyState == 4 && this.status == 200){
 			let jsonData = decodeURIComponent(request.response);
+			alert(jsonData)
 			screeningData = JSON.parse(jsonData);
+			alert(screeningData);
 			screening();
 		}
 	};
@@ -85,7 +87,37 @@ function divClick(mvCode, date){
 	request.send("sCode=2&mvCode="+mvCode+"&mvDate="+date);
 }
 
-function
+function gosc(jd){
+	
+	
+	
+	let movieInfo = document.getElementById("selectionTime");
+	
+	let movie = JSON.parse(jd);
+	alert("testing=" + movie);
+	alert(movie[0].MvScreen);
+	alert(movie[0].MvName);
+	
+	for(var index=0; index<movie.length; index++){
+		
+		let mvSeat = document.createElement("Div");
+		mvSeat.textContent = movie[index].mvSeat;
+		movieInfo.appendChild(mvSeat);
+		
+		let mvTime = document.createElement("Div");
+		mvTime.textContent = movie[index].mvTime;
+		movieInfo.appendChild(mvTime);
+		
+		
+		
+		let mvName = document.createElement("Div");
+		mvName.textContent = movie[index].mvName;
+		movieInfo.appendChild(mvName);
+		
+		let mvGrade = document.createElement("Div");
+		mvGrade.textContent = movie[index].mvGrade;
+		movieInfo.appendChild(mvGrade);
+	}
 
 
 
@@ -114,15 +146,16 @@ function screening(){
 }
 
 function tScreenClick(index){
-	let formData = "sCode=Step4&mvCode=" + screeningData[index].mvCode + 
+	let formData = "sCode=4&mvCode=" + screeningData[index].mvCode + 
 	"&mvThCode=1&mvDateTime=" + screeningData[index].mvDate.replace(/-/g, "") + screeningData[index].mvTime.replace(":", "") 
 	 + "&mvScreen=" + screeningData[index].mvScreen;
 
 	let form = document.createElement("form");
-	form.action = "step4?" + formData;
+	form.action = "step5?" + formData;
 	form.method = "post";
 	document.body.appendChild(form);
 	form.submit();
+}
 }
 
 </script>
