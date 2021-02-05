@@ -42,6 +42,9 @@ public class MovieList {
 			case"2":
 				mv = this.selectScreen(movie);
 				break;
+			case"3":
+				mv = this.reserve(movie);
+				break;
 				
 			}
 			
@@ -50,6 +53,22 @@ public class MovieList {
 		return mv;
 	}
 	
+	private ModelAndView reserve(Movie movie) {
+		
+		ModelAndView mv = new ModelAndView();
+		
+		System.out.println("도착햇슴!");
+		System.out.println("영화코드????" + movie.getMvCode());
+		System.out.println("극장이어디라고??"+movie.getMvThcode());
+		System.out.println("몇 상영관??"+movie.getMvScreen());
+		System.out.println("날자전체 ??"+movie.getMvDate());
+		System.out.println("서비스코드??"+movie.getSCode());
+		
+		mv.setViewName("step2");
+		
+		return mv;
+	}
+
 	private ModelAndView screeningDate(Movie movie) {
 		
 		ModelAndView mv = new ModelAndView();

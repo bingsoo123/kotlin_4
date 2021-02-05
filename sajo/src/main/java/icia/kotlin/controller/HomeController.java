@@ -67,13 +67,8 @@ public class HomeController {
 	
 	@RequestMapping(value = "/step4", method = {RequestMethod.GET,RequestMethod.POST})
 	@ResponseBody
-	public String step4(@ModelAttribute Movie movie) throws UnsupportedEncodingException {
-		System.out.println("도착햇슴!");
-		System.out.println("영화코드????" + movie.getMvCode());
-		System.out.println("상영관번호??" + movie.getMvScreen());
-		System.out.println("몇시에한다고??"+movie.getMvTime());
-		System.out.println("극장이어디라고??"+movie.getMvThcode());
-		return null;
+	public ModelAndView step4(@ModelAttribute Movie movie) throws UnsupportedEncodingException {
+		return mList.entrance(movie);
 	}
 	
 }

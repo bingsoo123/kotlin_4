@@ -14,7 +14,7 @@
 	</select>
 	
 	<select id="getScreenList" resultType="icia.kotlin.beans.Movie">
-		SELECT MVCODE , MVNAME , MVGRADE , SC AS MVSCREEN , TO_CHAR(MTIME,'HH24MI') AS MVTIME FROM TESTER WHERE TO_CHAR(MTIME,'YYYY-MM-DD') = #{mvDate} AND MVCODE=#{mvCode}  
+		SELECT MVCODE , MVNAME , MVGRADE , SC AS MVSCREEN , TO_CHAR(MTIME,'YYYYMMDDHH24MI') AS MVDATE , TO_CHAR(MTIME,'HH24MI') AS MVTIME FROM TESTER WHERE TO_CHAR(MTIME,'YYYY-MM-DD') = #{mvDate} AND MVCODE=#{mvCode}  
 	</select>
 	
 	<select id="isMovie" resultType="int">

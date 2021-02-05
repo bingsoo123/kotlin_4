@@ -96,7 +96,6 @@
 				let jsonData = decodeURIComponent(request.response);
 				  gosc(jsonData);
 			}
-			
 		};
 		
 		request.open("POST","goScreen",true);
@@ -150,10 +149,11 @@
 		var code = obj[num].mvCode;
 		var time = obj[num].mvTime;
 		var screen = obj[num].mvScreen;
+		var date = obj[num].mvDate;
 		
 		var form = document.createElement("form");
 		form.method="POST";
-		form.action="step4?mvCode="+code+"&mvTime="+time+"&mvScreen="+screen+"&mvThcode=1";
+		form.action="step4?mvCode="+code+"&mvTime="+time+"&mvScreen="+screen+"&sCode=3&mvThcode=1&mvDate="+date;
 		
 		document.body.appendChild(form);
 		
