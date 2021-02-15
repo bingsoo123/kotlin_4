@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 
 import icia.kotlin.beans.Movie;
+import icia.kotlin.beans.Seat;
 import icia.kotlin.mapper.Reservation;
 
 @Service
@@ -57,16 +58,21 @@ public class MovieList {
 		
 		ModelAndView mv = new ModelAndView();
 		
-		System.out.println("도착햇슴!");
-		System.out.println("영화코드????" + movie.getMvCode());
-		System.out.println("극장이어디라고??"+movie.getMvThcode());
-		System.out.println("몇 상영관??"+movie.getMvScreen());
-		System.out.println("날자전체 ??"+movie.getMvDate());
-		System.out.println("서비스코드??"+movie.getSCode());
+		mv.addObject("Access",this.getCurrentDate('f'));
 		
-		mv.setViewName("step2");
+		System.out.println(son.toJson(this.getSeat(movie)));
+		
+		mv.addObject("SeatInfo",son.toJson(this.getSeat(movie)));
+		/* 상영정보 */
+		
+		
+		mv.setViewName("step4");
 		
 		return mv;
+	}
+	
+	private ArrayList<Seat> getSeat(Movie movie){
+		return mapper.getSeat(movie);
 	}
 
 	private ModelAndView screeningDate(Movie movie) {

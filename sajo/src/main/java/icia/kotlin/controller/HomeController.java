@@ -42,7 +42,6 @@ public class HomeController {
 	
 	@RequestMapping(value = "/LogInForm", method = {RequestMethod.GET,RequestMethod.POST})	public ModelAndView LogInForm() {
 		ModelAndView mav = new ModelAndView();
-		
 		mav.setViewName("logInForm");
 		return mav;
 	}

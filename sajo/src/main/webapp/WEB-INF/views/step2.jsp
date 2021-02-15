@@ -23,7 +23,9 @@
 
 
 	<section id="movieZone" style="display: flex;">
-		<div id="movieInfo"></div>
+		<div id="movieInfo">
+		
+		</div>
 
 		<div id="selectionDate">
 			<div class="date">
